@@ -5,4 +5,8 @@
     <string name="hint_password">Password</string>
 
     <string name="label_sign_in">Sign In</string>
+
+    <string name="spiel_error_username_password_not_empty">Username or password should not be empty</string>
+    <string name="spiel_error_invalid_username_password">Invalid username or password</string>
+    <string name="spiel_error_default">Something went wrong, please try again later</string>
 </resources>
