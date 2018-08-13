@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">KitsuAndroid</string>
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+
+    <string name="label_sign_in">Sign In</string>
+</resources>
