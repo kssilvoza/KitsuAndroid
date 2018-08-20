@@ -33,4 +33,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edittext_password"/>
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/button_facebook_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_sign_in"/>
+
 </android.support.constraint.ConstraintLayout>

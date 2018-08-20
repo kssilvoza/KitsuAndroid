@@ -2,6 +2,7 @@ package com.silvozatechnologies.kitsuandroid.di.module
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import com.silvozatechnologies.kitsuandroid.BuildConfig
+import com.silvozatechnologies.kitsuandroid.data.network.kitsu.api.AnimeApi
 import com.silvozatechnologies.kitsuandroid.data.network.kitsu.api.TokenApi
 import dagger.Module
 import dagger.Provides
@@ -27,5 +28,11 @@ class ApiModule {
     @Singleton
     fun provideAuthApi(retrofit: Retrofit) : TokenApi {
         return retrofit.create(TokenApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAnimeApi(retrofit: Retrofit) : AnimeApi {
+        return retrofit.create(AnimeApi::class.java)
     }
 }

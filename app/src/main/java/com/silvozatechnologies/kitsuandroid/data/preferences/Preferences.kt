@@ -15,6 +15,10 @@ class Preferences(context: Context) {
         sharedPreferenceEditor.apply()
     }
 
+    fun getAccessToken() : String {
+        return sharedPreferences.getString(KEY_TOKENS_ACCESS_TOKEN, "")!!
+    }
+
     companion object {
         private const val SHARED_PREFERENCE_NAME = "kitsuandroid.pref"
 

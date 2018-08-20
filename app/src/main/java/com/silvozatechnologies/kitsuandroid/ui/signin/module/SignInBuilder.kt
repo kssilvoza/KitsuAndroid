@@ -17,5 +17,5 @@ internal abstract class SignInBuilder {
     @Binds
     @IntoMap
     @ViewModelKey(SignInViewModel::class)
-    abstract fun bindTopicsViewModel(viewModel: SignInViewModel) : ViewModel
+    abstract fun bindSignInViewModel(viewModel: SignInViewModel) : ViewModel
 }

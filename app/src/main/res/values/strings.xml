@@ -9,4 +9,7 @@
     <string name="spiel_error_username_password_not_empty">Username or password should not be empty</string>
     <string name="spiel_error_invalid_username_password">Invalid username or password</string>
     <string name="spiel_error_default">Something went wrong, please try again later</string>
+
+    <string name="facebook_app_id">2146230025400749</string>
+    <string name="fb_login_protocol_scheme">fb2146230025400749</string>
 </resources>

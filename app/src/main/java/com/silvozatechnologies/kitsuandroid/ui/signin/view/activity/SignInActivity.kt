@@ -6,12 +6,20 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.util.Log
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.google.gson.Gson
 import com.silvozatechnologies.kitsuandroid.R
 import com.silvozatechnologies.kitsuandroid.ui.home.view.activity.HomeActivity
 import com.silvozatechnologies.kitsuandroid.ui.signin.viewmodel.SignInViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_sign_in.*
+import java.util.*
 
 class SignInActivity : DaggerAppCompatActivity() {
     @Inject
@@ -19,12 +27,38 @@ class SignInActivity : DaggerAppCompatActivity() {
 
     private lateinit var viewModel: SignInViewModel
 
+    private lateinit var callbackManager: CallbackManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+        initializeFacebook()
         initializeViewModel()
         initializeButtons()
         startObserving()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private fun initializeFacebook() {
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager, object: FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult?) {
+                result?.let {
+                    viewModel.onFacebookLoginSuccess(result.accessToken.token)
+                }
+            }
+
+            override fun onCancel() {
+            }
+
+            override fun onError(error: FacebookException?) {
+                viewModel.onFacebookLoginError()
+            }
+        })
     }
 
     private fun initializeViewModel() {
@@ -33,6 +67,7 @@ class SignInActivity : DaggerAppCompatActivity() {
 
     private fun initializeButtons() {
         button_sign_in.setOnClickListener { onSignInButtonClicked() }
+        button_facebook_sign_in.setReadPermissions(Arrays.asList("public_profile", "email"))
     }
 
     private fun startObserving() {

@@ -14,6 +14,7 @@ import javax.inject.Singleton
 
     ApiModule::class,
     AppModule::class,
+    CoroutineModule::class,
     DataModule::class,
     NetworkModule::class,
     RepositoryModule::class,

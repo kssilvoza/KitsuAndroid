@@ -1,10 +1,10 @@
 package com.silvozatechnologies.kitsuandroid.data.repository
 
-import android.util.Log
 import com.google.gson.Gson
 import com.silvozatechnologies.kitsuandroid.common.exception.InvalidUsernamePasswordException
 import com.silvozatechnologies.kitsuandroid.data.network.Result
 import com.silvozatechnologies.kitsuandroid.data.network.kitsu.api.TokenApi
+import com.silvozatechnologies.kitsuandroid.data.network.kitsu.model.GetTokensUsingFacebookBody
 import com.silvozatechnologies.kitsuandroid.data.network.kitsu.model.GetTokensUsingPasswordBody
 import com.silvozatechnologies.kitsuandroid.data.network.kitsu.model.KitsuError
 import com.silvozatechnologies.kitsuandroid.data.network.kitsu.model.Tokens
@@ -33,6 +33,25 @@ class TokenRepository(private val tokenApi: TokenApi,
                         else ->
                             Result.Error(Exception())
                     }
+                }
+            }
+        } catch (e: Exception) {
+            result = Result.Error(e)
+        }
+
+        return result
+    }
+
+    suspend fun getTokensUsingFacebook(accessToken: String) : Result<Tokens> {
+        var result: Result<Tokens> = Result.Error(Exception())
+
+        try {
+            val body = GetTokensUsingFacebookBody(accessToken = accessToken)
+            val response = tokenApi.getTokensUsingFacebook(body).await()
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    preferences.putTokens(it)
+                    result = Result.Success(it)
                 }
             }
         } catch (e: Exception) {
