@@ -34,7 +34,7 @@ class SignInViewModel @Inject constructor(
                     is Result.Success ->
                         flow.value = FLOW_TO_HOME
                     is Result.Error -> {
-                        when(result.exception) {
+                        when (result.exception) {
                             is InvalidUsernamePasswordException ->
                                 spiel.value = SPIEL_ERROR_INVALID_USERNAME_PASSWORD
                             else ->

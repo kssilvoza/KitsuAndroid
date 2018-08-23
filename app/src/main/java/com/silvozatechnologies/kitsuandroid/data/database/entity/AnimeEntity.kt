@@ -11,6 +11,7 @@ data class AnimeEntity(
         @ColumnInfo(name = "canonical_title") val canonicalTitle: String,
         @ColumnInfo(name = "average_rating") val averageRating: Float,
         @ColumnInfo(name = "popularity_rank") val popularityRank: Int,
+        @ColumnInfo(name = "status") val status: String,
         @ColumnInfo(name = "poster_image_small") val posterImageSmall: String,
         @ColumnInfo(name = "poster_image_original") val posterImageOriginal: String
 )

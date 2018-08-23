@@ -9,4 +9,7 @@ import com.silvozatechnologies.kitsuandroid.data.database.entity.AnimeEntity
 interface AnimeDao {
     @Insert
     fun insert(animeEntities: List<AnimeEntity>)
+
+    @Query(value = "DELETE FROM anime WHERE status = 'current'")
+    fun deleteCurrent()
 }

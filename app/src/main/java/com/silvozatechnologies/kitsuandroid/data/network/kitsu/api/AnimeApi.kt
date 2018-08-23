@@ -8,6 +8,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface AnimeApi {
-    @GET("/api/edge/anime?filter[status]=current&sort=popularityRank")
+    @GET("/api/edge/anime?filter[subtype]=TV&fields[anime]=canonicalTitle,averageRating,popularityRank,subtype,status,posterImage&filter[status]=current&sort=popularityRank")
     fun getCurrentAnime(@Query("page[offset]") offset: Int, @Query("page[limit]") limit: Int) : Deferred<Response<GetMediaResponse<Attributes>>>
 }

@@ -24,6 +24,10 @@ android {
             buildConfigField("String", "KITSE_API_BASE_URL", KITSU_API_BASE_URL)
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 ext {
@@ -36,6 +40,7 @@ ext {
     retrofitVersion = '2.4.0'
     okHttpVersion = '3.11.0'
     retrofitCoroutineAdapterVersion = '1.0.0'
+    picassoVersion = '2.71828'
     facebookVersion = '4.31.0'
     timberVersion = '4.7.1'
     junitVersion = '4.12'
@@ -70,6 +75,8 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:$retrofitCoroutineAdapterVersion"
+
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
 
     implementation "com.facebook.android:facebook-android-sdk:$facebookVersion"
 

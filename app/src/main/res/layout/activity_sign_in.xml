@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout"
@@ -14,7 +13,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_email"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/edittext_password"
@@ -23,7 +22,7 @@
         android:hint="@string/hint_password"
         android:inputType="textPassword"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edittext_username"/>
+        app:layout_constraintTop_toBottomOf="@id/edittext_username" />
 
     <Button
         android:id="@+id/button_sign_in"
@@ -31,7 +30,7 @@
         android:layout_height="wrap_content"
         android:text="@string/label_sign_in"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edittext_password"/>
+        app:layout_constraintTop_toBottomOf="@id/edittext_password" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/button_facebook_sign_in"
@@ -39,6 +38,6 @@
         android:layout_height="30dp"
         android:layout_gravity="center_horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_sign_in"/>
+        app:layout_constraintTop_toBottomOf="@id/button_sign_in" />
 
 </android.support.constraint.ConstraintLayout>

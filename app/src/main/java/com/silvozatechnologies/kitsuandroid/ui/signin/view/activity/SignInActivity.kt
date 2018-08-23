@@ -68,6 +68,10 @@ class SignInActivity : DaggerAppCompatActivity() {
     private fun initializeButtons() {
         button_sign_in.setOnClickListener { onSignInButtonClicked() }
         button_facebook_sign_in.setReadPermissions(Arrays.asList("public_profile", "email"))
+
+        // Only use dummy account to prevent pushing real account
+        edittext_username.setText("kimtestemail1@gmail.com")
+        edittext_password.setText("testpassword001")
     }
 
     private fun startObserving() {
