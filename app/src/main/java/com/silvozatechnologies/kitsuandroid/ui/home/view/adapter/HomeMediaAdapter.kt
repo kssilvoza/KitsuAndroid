@@ -2,6 +2,8 @@ package com.silvozatechnologies.kitsuandroid.ui.home.view.adapter
 
 import android.arch.lifecycle.LifecycleOwner
 import android.databinding.DataBindingUtil
+import android.os.Bundle
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,10 +11,9 @@ import com.silvozatechnologies.kitsuandroid.R
 import com.silvozatechnologies.kitsuandroid.data.database.entity.AnimeEntity
 import com.silvozatechnologies.kitsuandroid.databinding.ItemHomeMediaBinding
 import com.silvozatechnologies.kitsuandroid.ui.home.viewmodel.HomeMediaItemViewModel
-import timber.log.Timber
 
 class HomeMediaAdapter(private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<HomeMediaAdapter.ViewHolder>() {
-    private var animeEntities = listOf<AnimeEntity>()
+    private var animeEntities = mutableListOf<AnimeEntity>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -26,13 +27,37 @@ class HomeMediaAdapter(private val lifecycleOwner: LifecycleOwner) : RecyclerVie
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.viewmodel = HomeMediaItemViewModel(animeEntities[position])
+        holder.binding.viewModel = HomeMediaItemViewModel(animeEntities[position])
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        super.onBindViewHolder(holder, position, payloads)
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position)
+            return
+        }
+
+        if (payloads[0] is Bundle) {
+            val bundle = payloads[0] as Bundle
+
+            if (bundle.containsKey(MediaDiffCallback.CANONICAL_TITLE_CHANGE)) {
+                val canonicalTitle = bundle.getString(MediaDiffCallback.CANONICAL_TITLE_CHANGE, "")
+                holder.binding.viewModel?.canonicalTitle?.value = canonicalTitle
+            }
+            if (bundle.containsKey(MediaDiffCallback.POSTER_IMAGE_SMALL_CHANGE)) {
+                val posterImageSmall = bundle.getString(MediaDiffCallback.POSTER_IMAGE_SMALL_CHANGE, "")
+                holder.binding.viewModel?.posterImage?.value = posterImageSmall
+            }
+        }
     }
 
     fun setAnimeEntities(animeEntities: List<AnimeEntity>) {
-        this.animeEntities = animeEntities
-        Timber.d(animeEntities.toString())
-        notifyDataSetChanged()
+        val mediaDiffCallback = MediaDiffCallback(this.animeEntities, animeEntities)
+        val diffResult = DiffUtil.calculateDiff(mediaDiffCallback)
+
+        this.animeEntities.clear()
+        this.animeEntities.addAll(animeEntities)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     class ViewHolder(val binding: ItemHomeMediaBinding) : RecyclerView.ViewHolder(binding.root)
