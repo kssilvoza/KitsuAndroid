@@ -27,7 +27,7 @@ class HomeAnimeViewModel @Inject constructor(
 
     fun getCurrentAnime() {
         job = launch(coroutineContextProvider.uiContext()) {
-            val result = animeRepository.getCurrentAnime()
+            val result = animeRepository.getCurrentAnimeList()
             Timber.d(result.toString())
             when (result) {
                 is Result.Success ->

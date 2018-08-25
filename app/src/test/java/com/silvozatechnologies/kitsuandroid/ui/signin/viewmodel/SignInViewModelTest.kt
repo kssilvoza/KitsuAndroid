@@ -36,7 +36,7 @@ class SignInViewModelTest {
     }
 
     @Test
-    fun onSignInClicked_flowToHome() = runBlocking {
+    fun onSignInClicked_validUsernamePassword_flowToHome() = runBlocking {
         val username = "username"
         val password = "password"
         val tokens = Tokens(accessToken = "access_token", refreshToken = "refresh_token", expiresIn = 1800000, createdAt = System.currentTimeMillis())
@@ -50,7 +50,7 @@ class SignInViewModelTest {
     }
 
     @Test
-    fun onSignInClicked_showUsernamePasswordNotEmptySpiel() = runBlocking {
+    fun onSignInClicked_emptyUsernamePassword_showUsernamePasswordNotEmptySpiel() = runBlocking {
         val username = ""
         val password = ""
         signInViewModel.spiel.observeForever(intObserver)
@@ -61,7 +61,7 @@ class SignInViewModelTest {
     }
 
     @Test
-    fun onSignInClicked_showInvalidUsernamePasswordSpiel() = runBlocking {
+    fun onSignInClicked_invalidUsernamePassword_showInvalidUsernamePasswordSpiel() = runBlocking {
         val username = "username"
         val password = "password"
         val result = Result.Error(InvalidUsernamePasswordException())
@@ -74,7 +74,7 @@ class SignInViewModelTest {
     }
 
     @Test
-    fun onSignInClicked_showDefaultErrorSpiel() = runBlocking {
+    fun onSignInClicked_unexpectedError_showDefaultErrorSpiel() = runBlocking {
         val username = "username"
         val password = "password"
         val result = Result.Error(Exception())
