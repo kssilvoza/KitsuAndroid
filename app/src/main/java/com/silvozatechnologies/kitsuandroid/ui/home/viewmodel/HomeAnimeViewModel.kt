@@ -15,18 +15,19 @@ class HomeAnimeViewModel @Inject constructor(
         private val animeRepository: AnimeRepository,
         private val coroutineContextProvider: CoroutineContextProvider) : ViewModel() {
     val currentAnimeList = MutableLiveData<List<AnimeEntity>>()
+    val upcomingAnimeList = MutableLiveData<List<AnimeEntity>>()
 
-    private var job: Job? = null
+    private var jobs = mutableListOf<Job>()
 
     override fun onCleared() {
         super.onCleared()
-        job?.let {
+        jobs.forEach {
             it.cancel()
         }
     }
 
     fun getCurrentAnime() {
-        job = launch(coroutineContextProvider.uiContext()) {
+        val job = launch(coroutineContextProvider.uiContext()) {
             val result = animeRepository.getCurrentAnimeList()
             Timber.d(result.toString())
             when (result) {
@@ -34,5 +35,18 @@ class HomeAnimeViewModel @Inject constructor(
                     currentAnimeList.value = result.data
             }
         }
+        jobs.add(job)
+    }
+
+    fun getUpcomingAnime() {
+        val job = launch(coroutineContextProvider.uiContext()) {
+            val result = animeRepository.getUpcomingAnimeList()
+            Timber.d(result.toString())
+            when (result) {
+                is Result.Success ->
+                    upcomingAnimeList.value = result.data
+            }
+        }
+        jobs.add(job)
     }
 }

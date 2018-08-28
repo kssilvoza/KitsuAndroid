@@ -20,6 +20,7 @@ class HomeAnimeFragment : DaggerFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var currentAnimeAdapter: HomeMediaAdapter
+    private lateinit var upcomingAnimeAdapter: HomeMediaAdapter
 
     private lateinit var viewModel: HomeAnimeViewModel
 
@@ -33,6 +34,7 @@ class HomeAnimeFragment : DaggerFragment() {
         initializeLists()
         startObserving()
         viewModel.getCurrentAnime()
+        viewModel.getUpcomingAnime()
     }
 
     private fun initializeViewModel() {
@@ -40,16 +42,21 @@ class HomeAnimeFragment : DaggerFragment() {
     }
 
     private fun initializeLists() {
-        currentAnimeAdapter = HomeMediaAdapter(this)
+        currentAnimeAdapter = HomeMediaAdapter(lifecycleOwner = this)
         recyclerview_current_anime.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         recyclerview_current_anime.adapter = currentAnimeAdapter
+
+        upcomingAnimeAdapter = HomeMediaAdapter(lifecycleOwner = this)
+        recyclerview_upcoming_anime.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        recyclerview_upcoming_anime.adapter = upcomingAnimeAdapter
     }
 
     private fun startObserving() {
-        viewModel.currentAnimeList.observe(this, Observer {
-            if (it != null) {
-                currentAnimeAdapter.setAnimeEntities(it)
-            }
+        viewModel.currentAnimeList.observe(this, Observer { animeEntities ->
+            animeEntities?.let { currentAnimeAdapter.setAnimeEntities(it) }
+        })
+        viewModel.upcomingAnimeList.observe(this, Observer { animeEntities ->
+            animeEntities?.let { upcomingAnimeAdapter.setAnimeEntities(it) }
         })
     }
 }
