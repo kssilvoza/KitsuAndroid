@@ -15,9 +15,9 @@ class AnimeRepository(private val animeApi: AnimeApi,
         try {
             val response = animeApi.getCurrentAnimeList(0, 10).await()
             if(response.isSuccessful) {
-                response.body()?.let { mediaResponse ->
+                response.body()?.let { getMediaResponse ->
                     val animeEntities = mutableListOf<AnimeEntity>()
-                    mediaResponse.data.forEach {
+                    getMediaResponse.data.forEach {
                         animeEntities.add(convertMedia(it))
                     }
 //                    animeDao.deleteCurrent()
