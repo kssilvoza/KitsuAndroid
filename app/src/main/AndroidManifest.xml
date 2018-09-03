@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.home.view.activity.HomeActivity" />
+        <activity android:name=".ui.media.view.activity.MediaActivity" />
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -38,7 +39,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/fb_login_protocol_scheme" />
+                <data android:scheme="@string/facebook_login_protocol_scheme" />
             </intent-filter>
         </activity>
     </application>

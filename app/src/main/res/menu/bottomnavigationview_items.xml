@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_anime"
+        android:title="@string/home_anime" />
+    <item
+        android:id="@+id/item_manga"
+        android:title="@string/home_manga" />
+    <item
+        android:id="@+id/item_favorite"
+        android:title="@string/home_favorite" />
+</menu>

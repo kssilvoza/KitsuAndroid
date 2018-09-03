@@ -12,8 +12,14 @@ import com.silvozatechnologies.kitsuandroid.data.database.entity.AnimeEntity
 import com.silvozatechnologies.kitsuandroid.databinding.ItemHomeMediaBinding
 import com.silvozatechnologies.kitsuandroid.ui.home.viewmodel.HomeMediaItemViewModel
 
-class HomeMediaAdapter(private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<HomeMediaAdapter.ViewHolder>() {
+class HomeMediaAdapter(
+        private val lifecycleOwner: LifecycleOwner,
+        private val listener: HomeMediaAdapter.Listener) : RecyclerView.Adapter<HomeMediaAdapter.ViewHolder>() {
     private var animeEntities = mutableListOf<AnimeEntity>()
+
+    interface Listener {
+        fun onItemClicked(animeEntity: AnimeEntity)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,6 +34,7 @@ class HomeMediaAdapter(private val lifecycleOwner: LifecycleOwner) : RecyclerVie
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.viewModel = HomeMediaItemViewModel(animeEntities[position])
+        holder.binding.listener = listener
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
@@ -42,11 +49,11 @@ class HomeMediaAdapter(private val lifecycleOwner: LifecycleOwner) : RecyclerVie
 
             if (bundle.containsKey(MediaDiffCallback.CANONICAL_TITLE_CHANGE)) {
                 val canonicalTitle = bundle.getString(MediaDiffCallback.CANONICAL_TITLE_CHANGE, "")
-                holder.binding.viewModel?.canonicalTitle?.value = canonicalTitle
+                holder.binding.viewModel?.setCanonicalTitle(canonicalTitle)
             }
             if (bundle.containsKey(MediaDiffCallback.POSTER_IMAGE_SMALL_CHANGE)) {
-                val posterImageSmall = bundle.getString(MediaDiffCallback.POSTER_IMAGE_SMALL_CHANGE, "")
-                holder.binding.viewModel?.posterImage?.value = posterImageSmall
+                val posterImage = bundle.getString(MediaDiffCallback.POSTER_IMAGE_SMALL_CHANGE, "")
+                holder.binding.viewModel?.setPosterImage(posterImage)
             }
         }
     }

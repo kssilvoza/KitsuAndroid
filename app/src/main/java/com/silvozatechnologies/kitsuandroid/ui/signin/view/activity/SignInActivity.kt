@@ -6,19 +6,17 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.util.Log
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.google.gson.Gson
 import com.silvozatechnologies.kitsuandroid.R
 import com.silvozatechnologies.kitsuandroid.ui.home.view.activity.HomeActivity
 import com.silvozatechnologies.kitsuandroid.ui.signin.viewmodel.SignInViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.activity_sign_in.*
+import kotlinx.android.synthetic.main.activity_signin.*
 import java.util.*
 
 class SignInActivity : DaggerAppCompatActivity() {
@@ -31,7 +29,7 @@ class SignInActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        setContentView(R.layout.activity_signin)
         initializeFacebook()
         initializeViewModel()
         initializeButtons()
